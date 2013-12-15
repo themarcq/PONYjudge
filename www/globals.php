@@ -1,10 +1,14 @@
 <?
 //usefull globals and configuration
 class global {
-public $dbhost='';
-public ='';
-public ='';
-public ='';
+public $storagehost='';
+public $storagepassword='';
+public $storageuser='';
+public $auth='';
+public $username='';
+public $www='';
+public $url='';
+//public ='';
 
 }
 
