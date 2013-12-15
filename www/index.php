@@ -1,27 +1,29 @@
 <?
 include('globals.php'); // global variables
+$global= new global;
 include('libs.php'); //libraries
-storage_connect(); // connect with storage - from lstorage.php
-storage_request(WEBSITECONFIG); // load website config - from lstorage.php
-auth(); // check if user is logged in - from lauth.php
+$storage=new storage;
+$storage->connect($global); // connect with storage - from lstorage.php
+$global->takeconfig($storage->request($storage.globalwwwconfig)); // load website config - from lstorage.php
+$global->takeconfig($storage->request($storage.auth)); // check if user is logged in - from lauth.php
 ?>
 
 <html>
 <head>
-<title><? echo WEBSITETITLE; ?></title>
+<title><? echo global.websitetitle; ?></title>
 </head>
 <body>
 
 <?
-template_show_header(); // from template.php
-template_show_menu();
-template_show_body();
-template_show_footer();
+template->show_header(); // from template.php
+template->show_menu();
+template->show_body();
+template->show_footer();
 ?>
 
 </body>
 </html>
 
 <?
-storage_disconnect();
+storage->disconnect();
 ?>
