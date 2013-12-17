@@ -1,16 +1,17 @@
 <?
 include('globals.php'); // global variables
-$global= new global;
+$globals= new globals;
+$globals->load_config('www.conf');
+$globals->take_session();
 include('libs.php'); //libraries
 $storage=new storage;
-$storage->connect($global); // connect with storage - from lstorage.php
-$global->takeconfig($storage->request($storage->globalwwwconfig)); // load website config - from lstorage.php
-$global->takeconfig($storage->request($storage->auth)); // check if user is logged in - from lauth.php
+$storage->connect($globals); // connect with storage - from lstorage.php
+$globals->take_vars($storage->auth());
 ?>
 
 <html>
 <head>
-<title><? echo global->websitetitle; ?></title>
+<title><? echo global->website_title; ?></title>
 </head>
 <body>
 
