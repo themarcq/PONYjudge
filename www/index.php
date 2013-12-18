@@ -1,30 +1,36 @@
 <?
-include('globals.php'); // global variables
-$globals= new globals;
-$globals->load_config('www.conf');
-$globals->take_session();
-include('libs.php'); //libraries
-$storage=new storage;
-$storage->connect($globals); // connect with storage - from lstorage.php
-$globals->take_vars($storage->auth());
+
+    include('libs.php');
+    $globals = new globals;
+    $storage = new storage;
+    $template = new template;
+    $user = new user;
+    $globals->load_config('config.ini');
+    $storage->connect($globals) or die('could not connect to storage!'); // <- essential!
+    $user->auth($storage);
+
 ?>
 
 <html>
-<head>
-<title><? echo global->website_title; ?></title>
-</head>
-<body>
+    <head>
+        <title><? echo $globals->websitetitle; ?></title>
+    </head>
+    <body>
 
-<?
-template->show_header(); // from template.php
-template->show_menu();
-template->show_body();
-template->show_footer();
-?>
+    <?
 
-</body>
+        $template->show_header();
+        $template->show_menu();
+        $template->show_body();
+        $template->show_footer();
+
+    ?>
+
+    </body>
 </html>
 
 <?
-storage->disconnect();
+
+    $storage->disconnect();
+
 ?>
