@@ -6,31 +6,9 @@
     $template = new template;
     $user = new user;
     $globals->load_config('config.ini');
-    $storage->connect($globals) or die('could not connect to storage!'); // <- essential!
-    $user->auth($storage);
-
-?>
-
-<html>
-    <head>
-        <title><? echo $globals->websitetitle; ?></title>
-    </head>
-    <body>
-
-    <?
-
-        $template->show_header();
-        $template->show_menu();
-        $template->show_body();
-        $template->show_footer();
-
-    ?>
-
-    </body>
-</html>
-
-<?
-
+    $storage->connect() or $template->show_error('Could not connect to storage!');
+    $user->auth();
+    $template->show();
     $storage->disconnect();
 
 ?>
