@@ -1,0 +1,6 @@
+classes and functions names - ^[word with small, first letter]([words with big, first letter]+)$
+objects - ^([big letter]+)$
+public class variables - ^([words with big, first letter]+)$
+local variables (e.g. in functions) - ^([small letters]+)$
+
+code formatting: deafult astyle

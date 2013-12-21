@@ -1,45 +1,54 @@
 <?
 
-class template{
-    public $errors;
-    public $errors_number=0;
-    public $menus;
-    public function show(){
-        global $globals;
+class template {
+    public $Errors;
+    public $ErrorsNumber=0;
+    public $Menus;
+    public $RequestedPage;
+    public function show() {
+        global $GLOBALS;
         echo'
         <html>
-            <head>
-                <title>'.$globals->websitetitle.'</title>
-                <link href="styles/style.css" rel="stylesheet" type="text/css" />
-            </head>
-            <body>
-                <div id="header">head</div>
-                <div id="menu">
+        <head>
+        <title>'.$GLOBALS->WebsiteTitle.'</title>
+        <link href="'.$GLOBALS->WebsiteUrl.'styles/style.css" rel="stylesheet" type="text/css" />
+        </head>
+        <body>
+        <div id="header">head</div>
+        <div id="menu">
         ';
-        foreach($this->menus as $title => $url){
+        if(count($this->Menus)>0)
+        foreach($this->Menus as $title => $url) {
             echo '<div id="menuitem"><a href="'.$url.'">'.$title.'</a></div>';
-        } 
+        }
         echo '  </div>
-                <div id="container">
-       ';
-        foreach($this->errors as $error){
+        <div id="container">
+        ';
+        if(count($this->Errors)>0)
+        foreach($this->Errors as $error) {
             echo '<div id="error">'.$error.'</div>';
-        }    
+        }
+        //vulnerability!
+        include($GLOBALS->WwwDir.'pages/'.$this->RequestedPage.'.php');
         echo'
-                </div>
-            </body>
+        </div>
+        </body>
         </html
         ';
     }
-    
-    public function show_error($s){
+
+    public function showError($s) {
         $this->errors[$this->errors_number++]=$s;
     }
-    
-    public function show_menu_item($title,$url){
-        $this->menus[$title]=$url;
+
+    public function showMenuItem($title,$url) {
+        $this->Menus[$title]=$url;
     }
-    
+
+    public function choose($page) {
+        $this->RequestedPage=$page;
+    }
+
 }
 
 ?>

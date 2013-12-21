@@ -1,14 +1,17 @@
 <?
 
-    include('libs.php');
-    $globals = new globals;
-    $storage = new storage;
-    $template = new template;
-    $user = new user;
-    $globals->load_config('config.ini');
-    $storage->connect() or $template->show_error('Could not connect to storage!');
-    $user->auth();
-    $template->show();
-    $storage->disconnect();
+include('libs.php');
+$GLOBALS = new globals;
+$STORAGE = new storage;
+$TEMPLATE = new template;
+$USER = new user;
+$GLOBALS->loadConfig('config.ini');
+$GLOBALS->loadUrl();
+$STORAGE->connect() or $TEMPLATE->showError('Could not connect to STORAGE!');
+$USER->auth();
+$TEMPLATE->showMenuItem('lol','ilokampf.pl');
+$TEMPLATE->choose($GLOBALS->RequestedPage);
+$TEMPLATE->show();
+$STORAGE->disconnect();
 
 ?>

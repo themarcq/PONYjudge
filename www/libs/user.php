@@ -1,13 +1,14 @@
 <?
 
-class user{
+class user {
 
-    public function auth($S){
-        if(!isSet($_COOKIE['id'])){
+    public function auth() {
+        global $STORAGE;
+        if(!isSet($_COOKIE['id'])) {
             $this->logged = false;
             $this->nick = 'anon';
-        }else{
-            $result=$S->query_sql('SELECT');
+        } else {
+            $result=$storage->querySql('SELECT');
         }
     }
 
