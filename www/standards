@@ -3,4 +3,4 @@ objects - ^([big letter]+)$
 public class variables - ^([words with big, first letter]+)$
 local variables (e.g. in functions) - ^([small letters]+)$
 
-code formatting: deafult astyle
+code formatting: deafult astyle for php files and nothing for now for htmls, 'cause astyle is a stupid bitch

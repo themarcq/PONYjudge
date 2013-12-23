@@ -11,7 +11,7 @@ class globals {
     }
 
     public function loadUrl() {
-        if(isSet($_GET['page']))
+        if(isSet($_GET['page']) && preg_match('/^([a-zA-Z0-9]+)$/',$_GET['page']))
             $this->RequestedPage=$_GET['page'];
         else
             $this->RequestedPage='news';

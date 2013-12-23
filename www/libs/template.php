@@ -28,7 +28,6 @@ class template {
         foreach($this->Errors as $error) {
             echo '<div id="error">'.$error.'</div>';
         }
-        //vulnerability!
         include($GLOBALS->WwwDir.'pages/'.$this->RequestedPage.'.php');
         echo'
         </div>
