@@ -1,2 +1,0 @@
-mysql-connector is used by storage to connect to mysql ( thanks cpt. obvious! )
-yassl is used by every module to commumicate with each other ( storage - server, judge and www - client )
