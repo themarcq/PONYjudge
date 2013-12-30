@@ -1,0 +1,59 @@
+OLDDOMJUDGE:
+
+team/
+
+changepasswd.php       global_scoreboards.php  print_auth.php          team.php
+checkpasswd.php        index.php               problem.php             update_clarifications.php
+clarification.php      init.php                problems.php            upload.php
+clarifications.php     logout.php              scoreboard.php          validate.php
+contests.php           menu_left.php           show_source.php         websubmit.php
+get_source.php         menu.php                style.css               zgloszenia.php
+global_scoreboard.php  news.php                submission_details.php
+
+
+jury/
+
+adduser.php         edit.php                menu.php                similarities.php
+admin.php           genpasswds.php          news.php                style.css
+ban.php             get_source.php          newss.php               style_source.css
+chcont.php          global_scoreboard.php   print_auth.php          submission.php
+checkconfig.php     global_scoreboards.php  problem.php             submissions.php
+checker.php         index.php               problems.php            team_affiliation.php
+clarification.php   init.php                recalculate_scores.php  team_affiliations.php
+clarifications.php  judgehost.php           rejudge.php             team_categories.php
+code_compare.php    judgehosts.php          scoreboard.php          team_category.php
+common.php          language.php            show_diff.php           team.php
+compare_delete.php  languages.php           show_ip_collision.php   teams.php
+contest.php         listardzen2.php         show_ip.php             update_clarifications.php
+contests.php        logout.php              show_source.php         verify.php
+delete.php          menu_left.php           showtime.php
+
+NEW PONYJUDGE:
+
+normal users:
+
+news
+profile
+questions
+add question
+contests
+contest
+scoreboards
+excersise
+submit
+logout
+show submition
+show-sumbition
+
+admins:
+
+adduser
+edituser
+similarities-between-submitions
+golobal-submitions
+addproblem
+editproblem
+addcontest
+editcontest
+diff
+ip-collisions

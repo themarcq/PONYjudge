@@ -1,3 +1,3 @@
 <?
-poeng
+$newses=$STORAGE->
 ?>

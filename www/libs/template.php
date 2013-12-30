@@ -37,7 +37,7 @@ class template {
     }
 
     public function showError($s) {
-        $this->errors[$this->errors_number++]=$s;
+        $this->errors[$this->ErrorsNumber++]=$s;
     }
 
     public function showMenuItem($title,$url) {
