@@ -1,0 +1,5 @@
+1.First start ./configure.sh, it will check dependencies, compile sources ( if needed ), and pack everything in tar.gz package.
+2.Once it ended without errors move the package to pendrive or whatever you want and unpack.
+3.Then insert your pendrive to destinated server and run ./install.sh.
+4.Now you must choose what you want to install on desired server. Remember: when installing the whole new PONYjudge, you must install storage first, what will create certificates and write configuration like its IP to www and judge conf files.
+5.Repeat this step with judge and www interface on desired machines. It is recommended, that every module will be on the other machine, but there is nocurcimstances if they are installed on one machine, but storage needs big amout of free disk space and judge needs proccessor, so setting everything apart is a good solution.
