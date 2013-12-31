@@ -12,3 +12,4 @@ ASM="g++"
 # $1 - compilator name
 # $2 - code number
 ${1} $DIRRST/$2.out $DIRSRC 
+# run program on specified user and send results to judged
