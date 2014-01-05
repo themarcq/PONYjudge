@@ -1,3 +1,3 @@
 #/bin/bash
-./judge.config
-echo "$1" | ssh -i $DIR/id_rsa $STORAGEIP
+source ./judge.conf
+echo "$1" | ssh storage@$STORAGEIP -q
