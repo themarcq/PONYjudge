@@ -1,11 +1,36 @@
 #@/bin/bash
 source ./judge.conf
-REQUEST="./storage_connector.sh "
-slots=1 
+pids[0]=0
+
+function slots_busy {
+    for i in `seq 1 ${pids[0]}`
+    do
+        if [ "x`ps -e | grep ${pids[$i]}`" == "x" ]
+        then
+            remove_pid $i
+            pids[0]=`expr ${pids[0]} - 1`
+        fi
+    done
+}
+
+function remove_pid {
+    end=`expr ${pids[0]} - 1`
+    for i in `seq $1 ${pids[0]}`
+    do
+        pids[$i]=pids[`expr $i + 1`]
+    done
+}
+
+function add_pid {
+    pids[0]=`expr ${pids[0]} + 1`
+    pids[${pids[0]}]=$1
+}
+
 while :
 do
     #if we have free slots
-    if [ "$slots" -lt "$MAXSLOTS" ]
+    slotsb=`slots_busy`
+    if [ "$slotsb" -lt "$MAXSLOTS" ]
     then
         #check if there is something new
         id=`$REQUEST 'DATABASE SELECT id FROM sources WHERE judged=FALSE AND judging=FALSE LIMIT 1' `
@@ -30,21 +55,15 @@ do
                 $REQUEST "DATABASE SELECT outshash FROM problems WHERE id=$problem" > $DIROUTS/$problem.hash
             fi
             #download source and give all the info for some judge-slave
-            #create cell
-            if [ ! -d "$DIRECTORY" ]; then
-                mkdir "$DIRCELLS/$id"
-            fi
-            
-            #download sources
             type=`$REQUEST "DATABASE SELECT type FROM sources WHERE id=$id"`
             memlimit=`$REQUEST "DATABASE SELECT memlimit FROM problems WHERE id=$problem"`
             timelimit=`$REQUEST "DATABASE SELECT timelimit FROM problems WHERE id=$problem"`
             $REQUEST "FILE source $id.$type" > "$DIRCELLS/$id/source.$type"
-            chmod 0 "$DIRCELLS/$id"
             #give infos to judge-slave
-            $DIR/judge-slave.sh $id $problem $type $memlimit $timelimit &
+            $SLAVE $id $problem $type $memlimit $timelimit &
+            #save its pid
+            add_pid $!
         fi
-        #cleaning ( I don't know what to do here, but if there would be something, it will be there )
     fi
     sleep 0.25
 done
