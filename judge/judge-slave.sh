@@ -15,9 +15,3 @@ then
     exit
 fi
 
-#create ulimits
-
-
-# define if its binary or interpreter
-# run it on tests and diff with outs
-# send results to storage
