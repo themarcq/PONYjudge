@@ -47,12 +47,18 @@ do
             then
                 $REQUEST "FILE TESTSIN $id.7z" > $DIRINS/$problem.7z
                 $REQUEST "DATABASE SELECT inshash FROM problems WHERE id=$problem" > $DIRINS/$problem.hash
+                rm -R $DIRINS/$problem
+                mkdir $DIRINS/$problem
+                7z e $DIRINS/$problem.7z -o$DIRINS/$problem/
             fi
             #if there are no outs or they are outdated
             if [ ! -a $DIROUTS/$problem.7z ] || [ $outshash != `cat $DIROUTS/$problem.hash` ]
             then
                 $REQUEST "FILE TESTSOUT $id.7z" > $DIROUTS/$problem.7z
                 $REQUEST "DATABASE SELECT outshash FROM problems WHERE id=$problem" > $DIROUTS/$problem.hash
+                 rm -R $DIROUTS/$problem
+                 mkdir $DIROUTS/$problem
+                 7z e $DIROUTS/$problem.7z -o$DIROUTS/$problem/
             fi
             #download source and give all the info for some judge-slave
             type=`$REQUEST "DATABASE SELECT type FROM sources WHERE id=$id"`

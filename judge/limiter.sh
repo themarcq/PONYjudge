@@ -3,7 +3,6 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin
 program=$1
 memlimit=$2
 outlimit=$3
-echo $memlimit
 
 ulimit -c 0             # max. size of coredump files in kB
 ulimit -v $memlimit     # max. total memory usage in kB
