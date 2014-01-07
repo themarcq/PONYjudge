@@ -1,3 +1,6 @@
 <?
-$newses=$STORAGE->
+
 ?>
+<div id="innercontainer">
+lel
+</div>
