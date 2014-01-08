@@ -33,13 +33,13 @@ do
     if [ "$slotsb" -lt "$MAXSLOTS" ]
     then
         #check if there is something new
-        id=`$REQUEST 'DATABASE SELECT id FROM sources WHERE judged=FALSE AND judging=FALSE LIMIT 1' `
+        id=`$REQUEST 'DATABASE SELECT id FROM solutions WHERE judged=FALSE AND judging=FALSE LIMIT 1' `
         if [ -n $id ]
         then
             #reserve it
-            $REQUEST "DATABASE UPDATE VALUES judging=TRUE FROM sources WHERE id=$id"
+            $REQUEST "DATABASE UPDATE VALUES judging=TRUE FROM solutions WHERE id=$id"
             #check what problem it is and download md5hash of tests
-            problem=`$REQUEST "DATABASE SELECT problem FROM sources WHERE id=$id"`
+            problem=`$REQUEST "DATABASE SELECT problem FROM solutions WHERE id=$id"`
             inshash=`$REQUEST "DATABASE SELECT inshash FROM problems WHERE id=$problem"`
             outshash=`$REQUEST "DATABASE SELECT outshash FROM problems WHERE id=$problem"`
             #if there are no ins or they are outdated
@@ -61,7 +61,7 @@ do
                  7z e $DIROUTS/$problem.7z -o$DIROUTS/$problem/
             fi
             #download source and give all the info for some judge-slave
-            type=`$REQUEST "DATABASE SELECT type FROM sources WHERE id=$id"`
+            type=`$REQUEST "DATABASE SELECT type FROM solutions WHERE id=$id"`
             memlimit=`$REQUEST "DATABASE SELECT memlimit FROM problems WHERE id=$problem"`
             timelimit=`$REQUEST "DATABASE SELECT timelimit FROM problems WHERE id=$problem"`
             $REQUEST "FILE source $id.$type" > "$DIRCELLS/$id/source.$type"

@@ -11,7 +11,6 @@ class template {
         <html>
         <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-
         <title>'.$GLOBALS->WebsiteTitle.'</title>
         <link href="'.$GLOBALS->WebsiteUrl.'styles/testing/style.css" rel="stylesheet" type="text/css" />
         </head>
