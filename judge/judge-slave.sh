@@ -16,7 +16,7 @@ then
 fi
 if [ ! "x`echo \"$compile\" | grep 'TLE'`" == "x" ]
 then
-    $REQUEST "DATABASE UPDATE solutions SET results='Compilation Error - Time limit excided', judging=FALSE, judged=TRUE WHERE id='$id'"
+    $REQUEST "DATABASE UPDATE solutions SET results='Compilation Error - Time limit exceeded', judging=FALSE, judged=TRUE WHERE id='$id'"
     exit
 fi
 
