@@ -25,7 +25,7 @@ class template {
         echo '  </div>
         <div id="container">
         <div id="innercontainer">
-        <h2>PONYJudge - V0.1 ALPHA</h2>
+        <h2>PONYJudge - V<? echo $GLOBALS->WwwVersion; ?></h2>
         </div>
         ';
         if(count($this->Errors)>0)
