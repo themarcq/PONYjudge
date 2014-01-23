@@ -1,0 +1,2 @@
+%needlogin%
+%needadmin%

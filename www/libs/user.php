@@ -8,7 +8,8 @@ class user {
             $this->logged = false;
             $this->nick = 'anon';
         } else {
-            $result=$storage->querySql('SELECT');
+            $result=$storage->querySql("SELECT `hash` FROM `sesions` WHERE `id`='".$_COOKIE['id']."'");
+            
         }
     }
 
