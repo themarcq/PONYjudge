@@ -28,13 +28,11 @@ using namespace sql;
 string load_line(){
 
     string s;
-    int i=0;
     char c=getchar_unlocked();
     while( c>=32 && c<=126 ){
-        s[i++]=c;
+        s+=c;
         c=getchar_unlocked();
     }
-    s[i++]=0;
     return s;
 
 }
@@ -42,13 +40,13 @@ string load_line(){
 string load_word(){
 
     string s;
-    int i=0;
     char c=getchar_unlocked();
-    while( (c<='Z' && c>='A') || (c<='z' && c>='a') || (c<='9' && c>='0') ){
-        s[i++]=c;
+    while( c>=32 && c<=126 && c!=' ' ){
+        if(c==EOF)return "EOF";
+        s+=c;
         c=getchar_unlocked();
     }
-    s[i++]=0;
+//    printf("|%s|",s.c_str());
     return s;
 }
 
@@ -63,6 +61,22 @@ static void retrieve_data_and_print (ResultSet *rs, int colidx) {
     cout << endl;
 
 } // retrieve_data_and_print()
+
+bool are_strings_equal(string s1, string s2){
+//printf("comparing |%s| and |%s| ",s1.c_str(),s2.c_str());
+    if(s1.compare(s2)==0){
+//        printf("equal\n");
+        return true;
+    }
+    else{
+//        printf("not equal\n");
+        return false;
+    }
+    /*for(int i=0;s1[i]!=0 and s2[i]!=0;i++)
+        if(s1[i]!=s2[i])
+            return false;
+    return true;*/
+}
 
 int main(int argc, const char *argv[]) {
 
@@ -95,34 +109,30 @@ int main(int argc, const char *argv[]) {
         //retrieving queries
         string Request;
         Request=load_word();
-        cout<<Request;
-        while(Request!="EOF") {
-            if(Request.compare("DATABASE")) {
+        while(!are_strings_equal(Request,"END")) {
+            if(are_strings_equal(Request,"DATABASE")) {
                 string Query;
                 Query = load_line();
                 res = stmt -> executeQuery (Query.c_str());
                 retrieve_data_and_print (res, 1);
-            } else if(Request.compare("FILE")) {
+                printf("EndOfResponse\n");
+            } else if(are_strings_equal(Request,"FILE")) {
                 //check what is it ( take or send file )
-            } else if(Request.compare("7Z")) {
+            } else if(are_strings_equal(Request,"7Z")) {
                 //7z requests
             } else {
                 cout<<"ERROR - Wrong request";
             }
             Request=load_word();
         }
+        
         /* Clean up */
-        delete res;
-        delete stmt;
-        delete prep_stmt;
-        con -> close();
-        delete con;
 
     } catch (SQLException &e) {
         cout << "ERROR: SQLException in " << __FILE__;
         cout << " (" << __func__<< ") on line " << __LINE__ << endl;
         cout << "ERROR: " << e.what();
-        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << " (MySQL error code: " << e .getErrorCode();
         cout << ", SQLState: " << e.getSQLState() << ")" << endl;
 
         if (e.getErrorCode() == 1047) {
