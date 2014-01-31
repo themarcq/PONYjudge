@@ -118,8 +118,13 @@ int main(int argc, const char *argv[]) {
                 printf("EndOfResponse\n");
             } else if(are_strings_equal(Request,"FILE")) {
                 //check what is it ( take or send file )
+                //then take its name, size, md5sum, chmods(optionally) and whatever we want
+                //wait for characteristic beggining and load till reaching destinated size and characteristic end(we can chat if everything is ok)
+                //check hash, save if good and throw prompt
             } else if(are_strings_equal(Request,"7Z")) {
-                //7z requests
+                //everything same as is in file
+                //but with adding subfiles to existing directories
+                //and we can skip compressing
             } else {
                 cout<<"ERROR - Wrong request";
             }
