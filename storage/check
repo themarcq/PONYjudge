@@ -1,0 +1,11 @@
+#!/bin/bash
+echo '-----------------------------'
+g++ -Wall -I/usr/include/cppconn mysql.cpp -L/usr/lib -lmysqlcppconn
+echo '-----------------------------'
+if [ "x$?" == "x0" ]
+then
+echo 'DATABASE SELECT * FROM lel' | ./a.out
+else
+echo 'compile error'
+fi
+echo '-----------------------------'

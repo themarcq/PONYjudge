@@ -20,7 +20,6 @@ compile by(on ubuntu ofc): g++ -Wall -I/usr/include/cppconn <my name> -L/usr/lib
 #include <resultset_metadata.h>
 #include <exception.h>
 #include <warning.h>
-#define NUMOFFSET 100
 #define COLNAME 200
 
 using namespace std;
@@ -30,27 +29,35 @@ string load_line(){
 
     string s;
     int i=0;
-    char c=getchar();
-    cout<<c;
-    do{
+    char c=getchar_unlocked();
+    while( c>=32 && c<=126 ){
         s[i++]=c;
-        c=getchar();
-        cout<<c;
-    }while(c!='\n')
+        c=getchar_unlocked();
+    }
+    s[i++]=0;
     return s;
 
 }
 
-static void retrieve_data_and_print (ResultSet *rs, int type, int colidx, string colname) {
+string load_word(){
+
+    string s;
+    int i=0;
+    char c=getchar_unlocked();
+    while( (c<='Z' && c>='A') || (c<='z' && c>='a') || (c<='9' && c>='0') ){
+        s[i++]=c;
+        c=getchar_unlocked();
+    }
+    s[i++]=0;
+    return s;
+}
+
+static void retrieve_data_and_print (ResultSet *rs, int colidx) {
 
     /* retrieve the row count in the result set */
     printf("NumberOfRows %d\n",(int)rs -> rowsCount());
     while (rs->next()) {
-        if (type == NUMOFFSET) {
             cout << rs -> getString(colidx) << endl;
-        } else if (type == COLNAME) {
-            cout << rs -> getString(colname) << endl;
-        } // if-else
     } // while
 
     cout << endl;
@@ -61,10 +68,10 @@ int main(int argc, const char *argv[]) {
 
 
     //to trza wczytać z pliku
-    char * DBHOST="tcp://127.0.0.1:3306";
-    char * USER="root";
-    char * PASSWORD="haslo";
-    char * DATABASE="lol";
+    char DBHOST[255]="tcp://127.0.0.1:3306";
+    char USER[255]="root";
+    char PASSWORD[255]="alleluja1";
+    char DATABASE[255]="lol";
 
     Driver *driver;
     Connection *con;
@@ -87,13 +94,14 @@ int main(int argc, const char *argv[]) {
 
         //retrieving queries
         string Request;
-        while(cin>>Request) {
+        Request=load_word();
+        cout<<Request;
+        while(Request!="EOF") {
             if(Request.compare("DATABASE")) {
                 string Query;
                 Query = load_line();
-                cout << Query;
-                res = stmt -> executeQuery (Query);
-                retrieve_data_and_print (res, NUMOFFSET, 1, string("*"));
+                res = stmt -> executeQuery (Query.c_str());
+                retrieve_data_and_print (res, 1);
             } else if(Request.compare("FILE")) {
                 //check what is it ( take or send file )
             } else if(Request.compare("7Z")) {
@@ -101,6 +109,7 @@ int main(int argc, const char *argv[]) {
             } else {
                 cout<<"ERROR - Wrong request";
             }
+            Request=load_word();
         }
         /* Clean up */
         delete res;
