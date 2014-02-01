@@ -4,7 +4,7 @@ g++ -Wall -I/usr/include/cppconn mysql.cpp -L/usr/lib -lmysqlcppconn
 echo '-----------------------------'
 if [ "x$?" == "x0" ]
 then
-echo -e "DATABASE SELECT * FROM lel\nEND" | ./a.out
+echo -e "DATABASE SELECT * FROM lel\nDATABASE SELECT * FROM lel\nEND" | ./a.out
 else
 echo 'compile error'
 fi
