@@ -11,6 +11,8 @@ compile by(on ubuntu ofc): g++ -Wall -I/usr/include/cppconn <my name> -L/usr/lib
 #include <string>
 #include <stdexcept>
 #include <map>
+#include <stdlib.h>
+#include <time.h>
 
 /* MySQL Connector/C++ specific headers */
 #include <driver.h>
@@ -24,15 +26,13 @@ compile by(on ubuntu ofc): g++ -Wall -I/usr/include/cppconn <my name> -L/usr/lib
 #include <warning.h>
 
 #define COLNAME 200
+#define _kurwa( (
 
 using namespace std;
 using namespace sql;
 
 //config variables
-string DBHOST;
-string USER;
-string PASSWORD;
-string DATABASE;
+std::map < std::string, std::map < std::string, std::string > > CONFIG;
 
 //configurations
 int load_config_file();
@@ -41,19 +41,22 @@ int load_config_file();
 string load_line();
 string load_word();
 
-//mysql help functions
+//helping functions
 static void retrieve_data_and_print (ResultSet *, int);
 bool are_strings_equal(string, string);
+string get_random_string(int);
+int save_bytes_to_file(int /*size*/, string /*path*/);
+void send_file_out(string /*path*/);
 
 //mysql main function
 void execute_mysql_request(Statement *);
 
 //file handling
-void load_file();
+void download_file();
 void send_file();
 
 //7zip handling
-void load_7z();
+void download_7z();
 void send_7z();
 void load_file_to_7z();
 
@@ -63,27 +66,17 @@ int main(int argc, const char *argv[]) {
         cout << "Error parsing file!";
         return 1;
     }
-    Driver *driver;
-    Connection *con;
-    Statement *stmt;
 
-    try {
-        driver = get_driver_instance();
-        con = driver -> connect(DBHOST, USER, PASSWORD);
-        con -> setAutoCommit(1);
-        con -> setSchema(DATABASE);
-        stmt = con -> createStatement();
 
         //retrieving queries
         string Request;
         Request=load_word();
-        while(!are_strings_equal(Request,"END")) {
-            if(are_strings_equal(Request,"DATABASE")) {
-                execute_mysql_request(stmt);
+             if(are_strings_equal(Request,"DATABASE")) {
+                execute_mysql_request();
             } else if(are_strings_equal(Request,"FILE")) {
                 Request=load_word();
                 if(are_strings_equal(Request,"SEND")) {
-                    load_file();
+                    download_file();
                 } else if(are_strings_equal(Request,"TAKE")) {
                     send_file();
                 } else {
@@ -92,7 +85,7 @@ int main(int argc, const char *argv[]) {
             } else if(are_strings_equal(Request,"7Z")) {
                 Request=load_word();
                 if(are_strings_equal(Request,"SEND")) {
-                    load_7z();
+                    download_7z();
                 } else if(are_strings_equal(Request,"TAKE")) {
                     send_7z();
                 } else if(are_strings_equal(Request,"UPDATE")) {
@@ -106,38 +99,12 @@ int main(int argc, const char *argv[]) {
             Request=load_word();
         }
 
-    } catch (SQLException &e) {
-        cout << "ERROR: SQLException in " << __FILE__;
-        cout << " (" << __func__<< ") on line " << __LINE__ << endl;
-        cout << "ERROR: " << e.what();
-        cout << " (MySQL error code: " << e .getErrorCode();
-        cout << ", SQLState: " << e.getSQLState() << ")" << endl;
-
-        if (e.getErrorCode() == 1047) {
-            /*
-            Error: 1047 SQLSTATE: 08S01 (ER_UNKNOWN_COM_ERROR)
-            Message: Unknown command
-            */
-            cout << "\nYour server does not seem to support Prepared Statements at all. ";
-            cout << "Perhaps MYSQL < 4.1?" << endl;
-        }
-
-        return EXIT_FAILURE;
-    } catch (std::runtime_error &e) {
-
-        cout << "ERROR: runtime_error in " << __FILE__;
-        cout << " (" << __func__ << ") on line " << __LINE__ << endl;
-        cout << "ERROR: " << e.what() << endl;
-
-        return EXIT_FAILURE;
-    }
-
     return EXIT_SUCCESS;
+    
 }
 
 int load_config_file() {
 
-    std::map < std::string, std::map < std::string, std::string > > vars;
     FILE * pFile;
     int c;
     string actsection;
@@ -171,18 +138,12 @@ int load_config_file() {
                     loading+=c;
                     c=getc(pFile);
                 }
-                vars[actsection][actname]=loading;
-                //printf("[%s]|%s|=|%s|\n",actsection.c_str(),actname.c_str(),loading.c_str());
+                CONFIG[actsection][actname]=loading;
             }
         } while (c != EOF);
         fclose (pFile);
     }
-
-    DBHOST=vars["mysql"]["dbhost"];
-    USER=vars["mysql"]["user"];
-    PASSWORD=vars["mysql"]["password"];
-    DATABASE=vars["mysql"]["database"];
-
+    
     return 0;
 
 }
@@ -232,22 +193,123 @@ bool are_strings_equal(string s1, string s2) {
     }
 }
 
-void execute_mysql_request(Statement *stmt) {
+void execute_mysql_request() {
 
+    try {
+        driver = get_driver_instance();
+        con = driver -> connect(CONFIG["mysql"]["dbhost"], CONFIG["mysql"]["user"], CONFIG["mysql"]["password"]);
+        con -> setAutoCommit(1);
+        con -> setSchema(CONFIG["mysql"]["database"]);
+        stmt = con -> createStatement();
     string Query;
     Query = load_line();
     ResultSet *res;
     res = stmt -> executeQuery (Query.c_str());
     retrieve_data_and_print (res, 1);
-    printf("EndOfResponse\n");
+    printf("EndOfResponse\n");//make sure, that there is nothing like that
+    } catch (SQLException &e) {
+        cout << "ERROR: SQLException in " << __FILE__;
+        cout << " (" << __func__<< ") on line " << __LINE__ << endl;
+        cout << "ERROR: " << e.what();
+        cout << " (MySQL error code: " << e .getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << ")" << endl;
+
+        if (e.getErrorCode() == 1047) {
+            /*
+            Error: 1047 SQLSTATE: 08S01 (ER_UNKNOWN_COM_ERROR)
+            Message: Unknown command
+            */
+            cout << "\nYour server does not seem to support Prepared Statements at all. ";
+            cout << "Perhaps MYSQL < 4.1?" << endl;
+        }
+
+        return EXIT_FAILURE;
+    } catch (std::runtime_error &e) {
+
+        cout << "ERROR: runtime_error in " << __FILE__;
+        cout << " (" << __func__ << ") on line " << __LINE__ << endl;
+        cout << "ERROR: " << e.what() << endl;
+
+        return EXIT_FAILURE;
+    }
 
 }
 
+void send_file_out(string path){
+    char buffer[256];
+FILE *file;
+if( (fp=fopen(path,"r")) == NULL ) {
+fprintf( stderr, "Could not open file \"%s\"\n", file );
+return ;
+}
+while( fgets(buffer,sizeof buffer,file) ) {
+printf( "%s", buffer );
+}
+fclose( file );
+}
+
+int save_bytes_to_file(int size, string path){
+
+    /*ommit header*/
+    /*load bytes to file*/
+    /*ommit footer*/
+return 0;
+}
+
 //file handling
-void load_file() {}
-void send_file() {}
+void download_file() {
+    
+    int size;
+    string name,tmpfile;
+    string tmppath=CONFIG["paths"]["tmp"]+get_random_string(16);
+    name=load_word();
+    size=atoi(load_word().c_str());
+    int download=save_bytes_to_file(size,tmppath);
+    if(download==0){
+        //nothing happend
+        //move file to other files
+        printf("OK\n");
+    }else{
+        printf("\nSomething went wrong downloading file! ERRNO: %d\n",download);
+    }
+
+}
+
+void send_file() {
+
+    string name;
+    name=load_word();
+    send_file_out(CONFIG["paths"]["files"]+name);
+
+}
 
 //7zip handling
-void load_7z() {}
-void send_7z() {}
-void load_file_to_7z() {}
+void download_7z() {
+
+}
+
+void send_7z() {
+
+}
+
+void load_file_to_7z() {
+
+}
+
+string get_random_string(int len) {
+
+    string s;
+    srand(time(NULL));
+    char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    for (int i = 0; i < len; ++i) {
+        s += alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
+
+    return s;
+
+}
+

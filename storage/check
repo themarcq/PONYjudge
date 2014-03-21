@@ -1,6 +1,6 @@
 #!/bin/bash
 echo '-----------------------------'
-g++ -Wall -I/usr/include/cppconn mysql.cpp -L/usr/lib -lmysqlcppconn
+g++ -Wall -I/usr/include/cppconn storage.cpp -L/usr/lib -lmysqlcppconn
 echo '-----------------------------'
 if [ "x$?" == "x0" ]
 then
