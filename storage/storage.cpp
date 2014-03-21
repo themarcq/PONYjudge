@@ -26,6 +26,7 @@ compile by(on ubuntu ofc): g++ -Wall -I/usr/include/cppconn <my name> -L/usr/lib
 #include <warning.h>
 
 #define COLNAME 200
+#define LL long long
 #define _kurwa
 
 using namespace std;
@@ -45,20 +46,20 @@ string load_word();
 static void retrieve_data_and_print (ResultSet *, int);
 bool are_strings_equal(string, string);
 string get_random_string(int);
-int save_bytes_to_file(int /*size*/, string /*path*/);
-void send_file_out(string /*path*/);
+void scan_to_file(int /*size*/, string /*path*/);
+void print_from_file(string /*path*/);
 
 //mysql main function
 void execute_mysql_request();
 
 //file handling
-void download_file();
-void send_file();
+void download_file_init();
+void send_file_init();
 
 //7zip handling
-void download_7z();
-void send_7z();
-void load_file_to_7z();
+void download_7z_init();
+void send_7z_init();
+void add_file_to_7z();
 
 int main(int argc, const char *argv[]) {
 
@@ -74,20 +75,20 @@ int main(int argc, const char *argv[]) {
     } else if(are_strings_equal(Request,"FILE")) {
         Request=load_word();
         if(are_strings_equal(Request,"SEND")) {
-            download_file();
+            download_file_init();
         } else if(are_strings_equal(Request,"TAKE")) {
-            send_file();
+            send_file_init();
         } else {
             cout<<"ERROR - Wrong request";
         }
     } else if(are_strings_equal(Request,"7Z")) {
         Request=load_word();
         if(are_strings_equal(Request,"SEND")) {
-            download_7z();
+            download_7z_init();
         } else if(are_strings_equal(Request,"TAKE")) {
-            send_7z();
+            send_7z_init();
         } else if(are_strings_equal(Request,"UPDATE")) {
-            load_file_to_7z();
+            add_file_to_7z();
         } else {
             cout<<"ERROR - Wrong request";
         }
@@ -228,64 +229,59 @@ void execute_mysql_request() {
 
 }
 
-void send_file_out(string path) {
+void print_from_file(string path) {
     char buffer[256];
     FILE *file;
-    if( (file=fopen(path.c_str(),"r")) == NULL ) {
+    if( (file=fopen(path.c_str(),"r")) == NULL )
         fprintf( stderr, "Could not open file \"%s\"\n", path.c_str() );
-        return ;
+    else {
+        while( fgets(buffer,sizeof buffer,file) ) {
+            printf( "%s", buffer );
+        }
+        fclose( file );
     }
-    while( fgets(buffer,sizeof buffer,file) ) {
-        printf( "%s", buffer );
-    }
-    fclose( file );
 }
 
-int save_bytes_to_file(int size, string path) {
+void scan_to_file(int size, string path) {
 
-    /*ommit header*/
-    /*load bytes to file*/
-    /*ommit footer*/
-    return 0;
+    FILE *file;
+    file = fopen(path.c_str(), "a");
+    for(LL i=0; i<size; i++)
+        fputc(getchar_unlocked(), file);
+    fclose(file);
+    
 }
 
 //file handling
-void download_file() {
+void download_file_init() {
 
     int size;
     string name,tmpfile;
-    string tmppath=CONFIG["paths"]["tmp"]+get_random_string(16);
     name=load_word();
     size=atoi(load_word().c_str());
-    int download=save_bytes_to_file(size,tmppath);
-    if(download==0) {
-        //nothing happend
-        //move file to other files
-        printf("OK\n");
-    } else {
-        printf("\nSomething went wrong downloading file! ERRNO: %d\n",download);
-    }
+    string path=CONFIG["paths"]["files"]+name;
+    scan_to_file(size, path);
 
 }
 
-void send_file() {
+void send_file_init() {
 
     string name;
     name=load_word();
-    send_file_out(CONFIG["paths"]["files"]+name);
+    print_from_file(CONFIG["paths"]["files"]+name);
 
 }
 
 //7zip handling
-void download_7z() {
+void download_7z_init() {
 
 }
 
-void send_7z() {
+void send_7z_init() {
 
 }
 
-void load_file_to_7z() {
+void add_file_to_7z() {
 
 }
 
