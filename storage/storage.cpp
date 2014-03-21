@@ -26,7 +26,7 @@ compile by(on ubuntu ofc): g++ -Wall -I/usr/include/cppconn <my name> -L/usr/lib
 #include <warning.h>
 
 #define COLNAME 200
-#define _kurwa( (
+#define _kurwa
 
 using namespace std;
 using namespace sql;
@@ -49,7 +49,7 @@ int save_bytes_to_file(int /*size*/, string /*path*/);
 void send_file_out(string /*path*/);
 
 //mysql main function
-void execute_mysql_request(Statement *);
+void execute_mysql_request();
 
 //file handling
 void download_file();
@@ -66,8 +66,6 @@ int main(int argc, const char *argv[]) {
         cout << "Error parsing file!";
         return 1;
     }
-
-
     //retrieving queries
     string Request;
     Request=load_word();
@@ -97,9 +95,6 @@ int main(int argc, const char *argv[]) {
         cout<<"ERROR - Wrong request";
     }
     Request=load_word();
-}
-
-return EXIT_SUCCESS;
 
 }
 
@@ -196,11 +191,11 @@ bool are_strings_equal(string s1, string s2) {
 void execute_mysql_request() {
 
     try {
-        driver = get_driver_instance();
-        con = driver -> connect(CONFIG["mysql"]["dbhost"], CONFIG["mysql"]["user"], CONFIG["mysql"]["password"]);
+        Driver *driver = get_driver_instance();
+        Connection *con = driver -> connect(CONFIG["mysql"]["dbhost"], CONFIG["mysql"]["user"], CONFIG["mysql"]["password"]);
         con -> setAutoCommit(1);
         con -> setSchema(CONFIG["mysql"]["database"]);
-        stmt = con -> createStatement();
+        Statement *stmt = con -> createStatement();
         string Query;
         Query = load_line();
         ResultSet *res;
@@ -223,14 +218,12 @@ void execute_mysql_request() {
             cout << "Perhaps MYSQL < 4.1?" << endl;
         }
 
-        return EXIT_FAILURE;
     } catch (std::runtime_error &e) {
 
         cout << "ERROR: runtime_error in " << __FILE__;
         cout << " (" << __func__ << ") on line " << __LINE__ << endl;
         cout << "ERROR: " << e.what() << endl;
 
-        return EXIT_FAILURE;
     }
 
 }
@@ -238,8 +231,8 @@ void execute_mysql_request() {
 void send_file_out(string path) {
     char buffer[256];
     FILE *file;
-    if( (fp=fopen(path,"r")) == NULL ) {
-        fprintf( stderr, "Could not open file \"%s\"\n", file );
+    if( (file=fopen(path.c_str(),"r")) == NULL ) {
+        fprintf( stderr, "Could not open file \"%s\"\n", path.c_str() );
         return ;
     }
     while( fgets(buffer,sizeof buffer,file) ) {
