@@ -1,11 +1,12 @@
 #!/bin/bash
 echo '-----------------------------'
-g++ -Wall -I/usr/include/cppconn storage.cpp -L/usr/lib -lmysqlcppconn
+g++ -Wall -I/usr/include/cppconn storaged.cpp -o storaged -L/usr/lib -lmysqlcppconn
+chmod +x storaged
 echo '-----------------------------'
 if [ "x$?" == "x0" ]
 then
-echo -e "DATABASE SELECT * FROM lel\nDATABASE SELECT * FROM lel\nEND" | ./a.out
-echo -e "FILE TAKE penis" | ./a.out
+echo -e "DATABASE SELECT * FROM lel\nDATABASE SELECT * FROM lel\nEND" | ./storaged
+echo -e "FILE TAKE penis" | ./storaged
 else
 echo 'compile error'
 fi
