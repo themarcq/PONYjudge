@@ -5,8 +5,9 @@ chmod +x storaged
 echo '-----------------------------'
 if [ "x$?" == "x0" ]
 then
-echo -e "DATABASE SELECT * FROM lel\nDATABASE SELECT * FROM lel\nEND" | ./storaged
+echo -e "DATABASE SELECT * FROM lel\nDATABASE SELECT * FROM lel" | ./storaged
 echo -e "FILE TAKE penis" | ./storaged
+echo -e "7Z UPDATE lol.7z plik `wc -c < plik.gz;cat plik.gz`" | ./storaged
 else
 echo 'compile error'
 fi

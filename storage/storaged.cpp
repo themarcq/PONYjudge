@@ -25,6 +25,10 @@ compile by(on ubuntu ofc): g++ -Wall -I/usr/include/cppconn <my name> -L/usr/lib
 #include <exception.h>
 #include <warning.h>
 
+/* 7z */
+#include<unistd.h>
+#include <sys/wait.h>
+
 #define COLNAME 200
 #define LL long long
 #define _kurwa
@@ -55,11 +59,13 @@ void execute_mysql_request();
 //file handling
 void download_file_init();
 void send_file_init();
+void remove_file();
 
 //7zip handling
 void download_7z_init();
 void send_7z_init();
 void add_file_to_7z();
+void remove_7z();
 
 int main(int argc, const char *argv[]) {
 
@@ -78,6 +84,8 @@ int main(int argc, const char *argv[]) {
             download_file_init();
         } else if(are_strings_equal(Request,"TAKE")) {
             send_file_init();
+        } else if(are_strings_equal(Request,"REMOVE")) {
+            remove_file();
         } else {
             cout<<"ERROR - Wrong request";
         }
@@ -87,6 +95,8 @@ int main(int argc, const char *argv[]) {
             download_7z_init();
         } else if(are_strings_equal(Request,"TAKE")) {
             send_7z_init();
+        } else if(are_strings_equal(Request,"REMOVE")) {
+            remove_7z();
         } else if(are_strings_equal(Request,"UPDATE")) {
             add_file_to_7z();
         } else {
@@ -272,6 +282,12 @@ void send_file_init() {
 
 }
 
+void remove_file() {
+
+    remove((CONFIG["paths"]["files"]+load_word()).c_str());
+
+}
+
 //7zip handling
 void download_7z_init() {
 
@@ -295,12 +311,31 @@ void send_7z_init() {
 void add_file_to_7z() {
 
     int size;
-    string name;
-    name=load_word();
+    string filename,archivename;
+    archivename=load_word();
+    filename=load_word();
     size=atoi(load_word().c_str());
-    string path=CONFIG["paths"]["tmp"]+name;
-    scan_to_file(size, path);
+    string filepath=CONFIG["paths"]["tmp"]+filename+".gz";    
+    string archivepath=CONFIG["paths"]["archives"]+archivename;
+    scan_to_file(size, filepath);
     
+    pid_t pid = fork();
+    execl("/bin/gzip", "gzip", "-d", filepath.c_str(), (char *)NULL); 
+    int status;
+    waitpid(pid, &status, 0);
+    filepath=CONFIG["paths"]["tmp"]+filename;
+    
+    pid = fork();
+    execl("/usr/bin/7z", "7z", "a", archivepath.c_str(), filepath.c_str(), (char *)NULL); 
+    waitpid(pid, &status, 0);
+    
+    remove(filepath.c_str());
+
+}
+
+void remove_7z() {
+
+    remove((CONFIG["paths"]["archives"]+load_word()).c_str());
 
 }
 

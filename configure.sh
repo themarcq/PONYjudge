@@ -4,4 +4,3 @@
 #create certificates
 #pack everything to .tar.gz
 tar cf PONYjudge.tar.gz www/ storage/ judge/ installwizard/*
- 
