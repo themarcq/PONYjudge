@@ -240,6 +240,7 @@ void execute_mysql_request() {
 }
 
 void print_from_file(string path) {
+
     char buffer[256];
     FILE *file;
     if( (file=fopen(path.c_str(),"r")) == NULL )
@@ -250,14 +251,19 @@ void print_from_file(string path) {
         }
         fclose( file );
     }
+    
 }
 
 void scan_to_file(int size, string path) {
 
     FILE *file;
-    file = fopen(path.c_str(), "a");
-    for(LL i=0; i<size; i++)
-        fputc(getchar_unlocked(), file);
+    file = fopen(path.c_str(), "ab");
+    int BLOCK_SIZE = 1;
+    unsigned char buffer[BLOCK_SIZE];
+    while(size--) {
+        size_t bytes = fread(buffer, sizeof(char), BLOCK_SIZE, stdin);
+        fwrite(buffer, sizeof(char), bytes, file);
+    }
     fclose(file);
     
 }
@@ -322,7 +328,7 @@ void add_file_to_7z() {
     int pid = 0;
     pid = fork();
     if (pid==0) {
-    execl("/bin/gzip", "gzip", "-d", filepath.c_str(), (char *)NULL); 
+        execl("/bin/gzip", "gzip", "-d", filepath.c_str(), (char *)NULL); 
     }else{
         int pochujmitazmienna;
         waitpid(pid, &pochujmitazmienna, 0);
@@ -330,12 +336,13 @@ void add_file_to_7z() {
         pid=0;
         pid = fork();
         if (pid==0) {
-            execl("/usr/bin/7z", "7z", "a", archivepath.c_str(), filepath.c_str(), (char *)NULL); 
+            //execl("/usr/bin/7z", "7z", "a", archivepath.c_str(), filepath.c_str(), (char *)NULL); 
         }else{
             waitpid(pid, &pochujmitazmienna, 0);
             remove(filepath.c_str());
         }
     }
+    
 }
 
 void remove_7z() {

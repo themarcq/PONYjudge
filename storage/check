@@ -5,9 +5,16 @@ chmod +x storaged
 echo '-----------------------------'
 if [ "x$?" == "x0" ]
 then
-echo -e "DATABASE SELECT * FROM lel\nDATABASE SELECT * FROM lel" | ./storaged
-echo -e "FILE TAKE penis" | ./storaged
-echo -e "7Z UPDATE lol.7z plik `wc -c < plik.gz;cat plik.gz`" | ./storaged
+rm tmp/* archives/* files/*
+#echo -e "DATABASE SELECT * FROM lel\nDATABASE SELECT * FROM lel" | ./storaged
+#echo -e "FILE TAKE penis" | ./storaged
+echo -e "7Z UPDATE lol.7z plik `wc -c < plik.gz;dd if=plik.gz 2>/dev/null`" | ./storaged
+echo original file:
+hexdump plik.gz
+echo stdin hexdump
+dd if=plik.gz 2>/dev/null | hexdump
+echo copied file hexdump
+hexdump tmp/plik.gz
 else
 echo 'compile error'
 fi
