@@ -319,18 +319,23 @@ void add_file_to_7z() {
     string archivepath=CONFIG["paths"]["archives"]+archivename;
     scan_to_file(size, filepath);
     
-    pid_t pid = fork();
-    execl("/bin/gzip", "gzip", "-d", filepath.c_str(), (char *)NULL); 
-    int status;
-    waitpid(pid, &status, 0);
-    filepath=CONFIG["paths"]["tmp"]+filename;
-    
+    int pid = 0;
     pid = fork();
-    execl("/usr/bin/7z", "7z", "a", archivepath.c_str(), filepath.c_str(), (char *)NULL); 
-    waitpid(pid, &status, 0);
-    
-    remove(filepath.c_str());
-
+    if (pid==0) {
+    execl("/bin/gzip", "gzip", "-d", filepath.c_str(), (char *)NULL); 
+    }else{
+        int pochujmitazmienna;
+        waitpid(pid, &pochujmitazmienna, 0);
+        filepath=CONFIG["paths"]["tmp"]+filename;
+        pid=0;
+        pid = fork();
+        if (pid==0) {
+            execl("/usr/bin/7z", "7z", "a", archivepath.c_str(), filepath.c_str(), (char *)NULL); 
+        }else{
+            waitpid(pid, &pochujmitazmienna, 0);
+            remove(filepath.c_str());
+        }
+    }
 }
 
 void remove_7z() {
