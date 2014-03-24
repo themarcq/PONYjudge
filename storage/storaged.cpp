@@ -1,6 +1,7 @@
 /*
 this shit on ubuntu needs: libmysqlcppconn-dev
 compile by(on ubuntu ofc): g++ -Wall -I/usr/include/cppconn <my name> -L/usr/lib -lmysqlcppconn
+on Gentoo, emerge dev-db/mysql-connector-c++ before compiling
 */
 
 /* Standard C++ headers */
@@ -276,7 +277,7 @@ void scan_to_file(int size, string path) {
     //printf("%d ",wyn);
     dumphex(c,size);
     fclose(file);
-    
+    delete [] c;
 }
 
 //file handling

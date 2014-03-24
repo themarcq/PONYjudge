@@ -8,7 +8,10 @@ then
 rm tmp/* archives/* files/*
 #echo -e "DATABASE SELECT * FROM lel\nDATABASE SELECT * FROM lel" | ./storaged
 #echo -e "FILE TAKE penis" | ./storaged
-echo -e "7Z UPDATE lol.7z plik `wc -c < plik.gz;dd if=plik.gz 2>/dev/null`" | ./storaged
+#echo -e "7Z UPDATE lol.7z plik `wc -c < plik.gz;dd if=plik.gz 2>/dev/null`" | ./storaged
+echo "7Z UPDATE lol.7z plik `stat -c "%s" plik.gz`" > request.tmp
+cat plik.gz >> request.tmp
+./storaged < request.tmp
 echo original file:
 hexdump plik.gz
 echo stdin hexdump
