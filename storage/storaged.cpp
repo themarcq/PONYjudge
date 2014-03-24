@@ -254,16 +254,27 @@ void print_from_file(string path) {
     
 }
 
+void dumphex(unsigned char * bytes, int size){
+    for(int i=0;i<size;i+=2)
+    {
+        printf("%02x", bytes[i+1]);
+        printf("%02x ", bytes[i]);
+    }
+    printf("\n");
+}
+
 void scan_to_file(int size, string path) {
 
     FILE *file;
     file = fopen(path.c_str(), "ab");
-    int BLOCK_SIZE = 1;
-    unsigned char buffer[BLOCK_SIZE];
-    while(size--) {
-        size_t bytes = fread(buffer, sizeof(char), BLOCK_SIZE, stdin);
-        fwrite(buffer, sizeof(char), bytes, file);
+    unsigned char * c=new unsigned char[size];
+    //for(int i=0;i<size;i++)
+    //    c[i]=getchar_unlocked();
+    for(int i=0;i<size;i++){
+        int wyn = fread(c+i, 1, 1, stdin);
     }
+    //printf("%d ",wyn);
+    dumphex(c,size);
     fclose(file);
     
 }
