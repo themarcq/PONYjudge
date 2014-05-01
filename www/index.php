@@ -16,7 +16,7 @@ $TEMPLATE->showMenuItem('jakiś dłuższy tekścik','ilokampf.pl');
 $TEMPLATE->showMenuItem('więcej pól w menu!','ilokampf.pl');
 $TEMPLATE->showMenuItem('PONY!','pony');
 $TEMPLATE->showError('Latający Potworze Spaghetti! Error!');
-/* temporary! for testing */
+/* ! temporary! for testing */
 $TEMPLATE->choose($GLOBALS->RequestedPage);
 $TEMPLATE->show();
 $STORAGE->disconnect();

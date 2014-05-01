@@ -181,15 +181,12 @@ string load_word() {
 
 static void retrieve_data_and_print (ResultSet *rs, int colidx) {
 
-    if (rs -> rowsCount() == 1) {
-        cout<< rs -> getString(colidx);
-    } else {
-        int i=0;
-        while (rs->next()) {
-            cout << i << " > \"" << rs -> getString(colidx) << "\"\n";
-            i++;
-        }
+    printf("NumberOfRows %d\n",(int)rs -> rowsCount());
+    while (rs->next()) {
+        coutf << rs -> getString(colidx) << endl;
     }
+
+    cout << endl;
 
 }
 
@@ -216,6 +213,7 @@ void execute_mysql_request() {
         ResultSet *res;
         res = stmt -> executeQuery (Query.c_str());
         retrieve_data_and_print (res, 1);
+        printf("EndOfResponse\n");//make sure, that there is nothing like that
     } catch (SQLException &e) {
         cout << "ERROR: SQLException in " << __FILE__;
         cout << " (" << __func__<< ") on line " << __LINE__ << endl;
@@ -270,17 +268,16 @@ void scan_to_file(int size, string path) {
 
     FILE *file;
     file = fopen(path.c_str(), "ab");
-    printf("%s",path.c_str());
-    unsigned char c;
+    unsigned char * c=new unsigned char[size];
     //for(int i=0;i<size;i++)
     //    c[i]=getchar_unlocked();
     for(int i=0;i<size;i++){
-        fread(&c, 1, 1, stdin);
-        fputc(c,file);
+        int wyn = fread(c+i, 1, 1, stdin);
     }
     //printf("%d ",wyn);
-    //dumphex(c,size);
+    dumphex(c,size);
     fclose(file);
+    delete [] c;
 }
 
 //file handling
@@ -343,43 +340,174 @@ void add_file_to_7z() {
     int pid = 0;
     pid = fork();
     if (pid==0) {
-        execl("/bin/gzip", "gzip", "-d", filepath.c_str(), (char *)NULL); 
-    }else{
-        int pochujmitazmienna;
-        waitpid(pid, &pochujmitazmienna, 0);
-        filepath=CONFIG["paths"]["tmp"]+filename;
-        pid=0;
-        pid = fork();
-        if (pid==0) {
-            execl("/usr/bin/7z", "7z", "a", archivepath.c_str(), filepath.c_str(), (char *)NULL); 
-        }else{
-            waitpid(pid, &pochujmitazmienna, 0);
-            remove(filepath.c_str());
+        execl("/bin/gzip", "gzip", "-d", filepath.c_str()char_unlocked();
+    while( c>=32 && c<=126 && c!=' ' ) {
+        if(c==EOF)return "EOF";
+        s+=c;
+        c=getchar_unlocked();
+    }
+    return s;
+}
+
+static void retrieve_data_and_print (ResultSet *rs, int colidx) {
+
+    printf("NumberOfRows %d\n",(int)rs -> rowsCount());
+    while (rs->next()) {
+        coutf << rs -> getString(colidx) << endl;
+    }
+
+    cout << endl;
+
+}
+
+bool are_strings_equal(string s1, string s2) {
+
+    if(s1.compare(s2)==0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void execute_mysql_request() {
+
+    try {
+        Driver *driver = get_driver_instance();
+        Connection *con = driver -> connect(CONFIG["mysql"]["dbhost"], CONFIG["mysql"]["user"], CONFIG["mysql"]["password"]);
+        con -> setAutoCommit(1);
+        con -> setSchema(CONFIG["mysql"]["database"]);
+        Statement *stmt = con -> createStatement();
+        string Query;
+        Query = load_line();
+        ResultSet *res;
+        res = stmt -> executeQuery (Query.c_str());
+        retrieve_data_and_print (res, 1);
+        printf("EndOfResponse\n");//make sure, that there is nothing like that
+    } catch (SQLException &e) {
+        cout << "ERROR: SQLException in " << __FILE__;
+        cout << " (" << __func__<< ") on line " << __LINE__ << endl;
+        cout << "ERROR: " << e.what();
+        cout << " (MySQL error code: " << e .getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << ")" << endl;
+
+        if (e.getErrorCode() == 1047) {
+            /*
+            Error: 1047 SQLSTATE: 08S01 (ER_UNKNOWN_COM_ERROR)
+            Message: Unknown command
+            */
+            cout << "\nYour server does not seem to support Prepared Statements at all. ";
+            cout << "Perhaps MYSQL < 4.1?" << endl;
         }
+
+    } catch (std::runtime_error &e) {
+
+        cout << "ERROR: runtime_error in " << __FILE__;
+        cout << " (" << __func__ << ") on line " << __LINE__ << endl;
+        cout << "ERROR: " << e.what() << endl;
+
+    }
+
+}
+
+void print_from_file(string path) {
+
+    char buffer[256];
+    FILE *file;
+    if( (file=fopen(path.c_str(),"r")) == NULL )
+        fprintf( stderr, "Could not open file \"%s\"\n", path.c_str() );
+    else {
+        while( fgets(buffer,sizeof buffer,file) ) {
+            printf( "%s", buffer );
+        }
+        fclose( file );
     }
     
 }
 
-void remove_7z() {
-
-    remove((CONFIG["paths"]["archives"]+load_word()).c_str());
-
-}
-
-string get_random_string(int len) {
-
-    string s;
-    srand(time(NULL));
-    char alphanum[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
-
-    for (int i = 0; i < len; ++i) {
-        s += alphanum[rand() % (sizeof(alphanum) - 1)];
+void dumphex(unsigned char * bytes, int size){
+    for(int i=0;i<size;i+=2)
+    {
+        printf("%02x", bytes[i+1]);
+        printf("%02x ", bytes[i]);
     }
+    printf("\n");
+}
 
-    return s;
+void scan_to_file(int size, string path) {
+
+    FILE *file;
+    file = fopen(path.c_str(), "ab");
+    unsigned char * c=new unsigned char[size];
+    //for(int i=0;i<size;i++)
+    //    c[i]=getchar_unlocked();
+    for(int i=0;i<size;i++){
+        int wyn = fread(c+i, 1, 1, stdin);
+    }
+    //printf("%d ",wyn);
+    dumphex(c,size);
+    fclose(file);
+    delete [] c;
+}
+
+//file handling
+void download_file_init() {
+
+    int size;
+    string name;
+    name=load_word();
+    size=atoi(load_word().c_str());
+    string path=CONFIG["paths"]["files"]+name;
+    scan_to_file(size, path);
 
 }
 
+void send_file_init() {
+
+    string name;
+    name=load_word();
+    print_from_file(CONFIG["paths"]["files"]+name);
+
+}
+
+void remove_file() {
+
+    remove((CONFIG["paths"]["files"]+load_word()).c_str());
+
+}
+
+//7zip handling
+void download_7z_init() {
+
+    int size;
+    string name;
+    name=load_word();
+    size=atoi(load_word().c_str());
+    string path=CONFIG["paths"]["archives"]+name;
+    scan_to_file(size, path);
+
+}
+
+void send_7z_init() {
+
+    string name;
+    name=load_word();
+    print_from_file(CONFIG["paths"]["archives"]+name);
+
+}
+
+void add_file_to_7z() {
+
+    int size;
+    string filename,archivename;
+    archivename=load_word();
+    filename=load_word();
+    size=atoi(load_word().c_str());
+    string filepath=CONFIG["paths"]["tmp"]+filename+".gz";    
+    string archivepath=CONFIG["paths"]["archives"]+archivename;
+    scan_to_file(size, filepath);
+    
+    int pid = 0;
+    pid = fork();
+    if (pid==0) {
+        execl("/bin/gzip", "gzip", "-d", filepath.c_str()

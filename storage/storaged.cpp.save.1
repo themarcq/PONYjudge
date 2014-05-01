@@ -181,15 +181,12 @@ string load_word() {
 
 static void retrieve_data_and_print (ResultSet *rs, int colidx) {
 
-    if (rs -> rowsCount() == 1) {
-        cout<< rs -> getString(colidx);
-    } else {
-        int i=0;
-        while (rs->next()) {
-            cout << i << " > \"" << rs -> getString(colidx) << "\"\n";
-            i++;
-        }
+    printf("NumberOfRows %d\n",(int)rs -> rowsCount());
+    while (rs->next()) {
+        coutf << rs -> getString(colidx) << endl;
     }
+
+    cout << endl;
 
 }
 
@@ -216,6 +213,7 @@ void execute_mysql_request() {
         ResultSet *res;
         res = stmt -> executeQuery (Query.c_str());
         retrieve_data_and_print (res, 1);
+        printf("EndOfResponse\n");//make sure, that there is nothing like that
     } catch (SQLException &e) {
         cout << "ERROR: SQLException in " << __FILE__;
         cout << " (" << __func__<< ") on line " << __LINE__ << endl;
@@ -270,17 +268,16 @@ void scan_to_file(int size, string path) {
 
     FILE *file;
     file = fopen(path.c_str(), "ab");
-    printf("%s",path.c_str());
-    unsigned char c;
+    unsigned char * c=new unsigned char[size];
     //for(int i=0;i<size;i++)
     //    c[i]=getchar_unlocked();
     for(int i=0;i<size;i++){
-        fread(&c, 1, 1, stdin);
-        fputc(c,file);
+        int wyn = fread(c+i, 1, 1, stdin);
     }
     //printf("%d ",wyn);
-    //dumphex(c,size);
+    dumphex(c,size);
     fclose(file);
+    delete [] c;
 }
 
 //file handling
@@ -351,7 +348,7 @@ void add_file_to_7z() {
         pid=0;
         pid = fork();
         if (pid==0) {
-            execl("/usr/bin/7z", "7z", "a", archivepath.c_str(), filepath.c_str(), (char *)NULL); 
+            //execl("/usr/bin/7z", "7z", "a", archivepath.c_str(), filepath.c_str(), (char *)NULL); 
         }else{
             waitpid(pid, &pochujmitazmienna, 0);
             remove(filepath.c_str());

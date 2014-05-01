@@ -16,7 +16,7 @@ then
 fi
 if [ ! "x`echo \"$compile\" | grep 'TLE'`" == "x" ]
 then
-    $REQUEST "DATABASE UPDATE solutions SET results='Compilation Error - Time limit exceeded', judging=FALSE, judged=TRUE WHERE id='$id'"
+    $REQUEST "DATABASE UPDATE solutions SET results='Compilation Error - TLE', judging=FALSE, judged=TRUE WHERE id='$id'"
     exit
 fi
 
@@ -25,7 +25,7 @@ $REQUEST "DATABASE UPDATE solutions SET results='' WHERE id='$id'"
 #run it on tests
 for test in `ls $DIRINS/$id`
 do
-    $RUN $DIRCELLS/$id/out $memlimit $outlimit $timelimit < $DIRINS/$id/$test > $tmpfilee
+    $RUN $DIRCELLS/$id/out $memlimit $outlimit $timelimit < $DIRINS/$id/$test > $tmpfile
     #check if there where errors TODO
     #check diff
     differents=`diff $tmpfile $DIROUTS/$id/$test`
@@ -33,9 +33,9 @@ do
     $result = `$REQUEST "DATABASE SELECT results FROM solutions WHERE id='$id'"`
     if [ "x$differents" == "x" ]
     then
-        $result="$result$id:WA;"
+        $result="$result:$id:WA;"
     else
-        $result="$result$id:AC;"
+        $result="$result:$id:AC;"
     fi
     $REQUEST "DATABASE UPDATE solutions SET results='$result' WHERE id='$id'"
 done
