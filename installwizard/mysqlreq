@@ -1,0 +1,4 @@
+CREATE USER judge_storage IDENTIFIED BY 'asd';
+GRANT USAGE ON *. * TO 'judge_storage'@'localhost' IDENTIFIED BY 'asd';
+CREATE DATABASE IF NOT EXISTS `judge_storage`;
+GRANT ALL PRIVILEGES ON `judge\_storage` . * TO 'judge_storage'@'localhost'

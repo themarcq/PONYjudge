@@ -1,0 +1,19 @@
+#!/bin/bash
+PONYDIR=/usr/share/ponyjudge
+STORAGEDIR=$PONYDIR/storage
+USER=ponyjudge_storage
+mkdir $PONYDIR
+cp -R storage/ $PONYDIR
+useradd -s $STORAGEDIR/storaged -r -p \* -d $STORAGEDIR $USER
+mkdir $STORAGEDIR/.ssh
+ssh-keygen -q -b 2048 -t rsa -f -N id_rsa
+cp id_rsa $STORAGEDIR/.ssh
+cp id_rsa.pub $STORAGEDIR/.ssh
+chmod 700 $STORAGEDIR/.ssh
+chmod 600 $STORAGEDIR/.ssh/id_rsa
+chmod 644 $STORAGEDIR/.ssh/id_rsa.pub
+cat $STORAGEDIR/.ssh/id_rsa.pub > $STORAGEDIR/.ssh/authorized_keys
+chmod 500 $STORAGEDIR/.ssh/authorized_keys
+cat mysqlreq | mysql -u root -p
+touch $STORAGEDIR/.hushlogin
+chown -R $USER:$USER $STORAGEDIR

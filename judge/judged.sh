@@ -66,7 +66,7 @@ do
             timelimit=`$REQUEST "DATABASE SELECT timelimit FROM problems WHERE id=$problem"`
             $REQUEST "FILE source $id.$type" > "$DIRCELLS/$id/source.$type"
             #give infos to judge-slave
-            $SLAVE $id $problem $type $memlimit $timelimit &
+            $SLAVE $id $problem $type $memlimit $timelimit `expr ${pids[0]} + 1` &
             #save its pid
             add_pid $!
         fi
