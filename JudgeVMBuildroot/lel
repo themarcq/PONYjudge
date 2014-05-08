@@ -1,0 +1,20 @@
+#!/bin/bash
+LOCATION="./output/images/"
+KERNEL="bzImage"
+DISK="rootfs.ext2"
+				
+qemu-system-i386 -kernel $LOCATION/$KERNEL \
+-serial stdio \
+-append "root=/dev/sda ro console=ttyS0" \
+-hda $LOCATION/$DISK \
+-hdb img.qcow2 \
+-boot c \
+-m 128 \
+-localtime \
+-no-reboot \
+-name rtlinux \
+-net nic -net user \
+-redir tcp:2222::22 \
+-redir tcp:3333::3333
+
+#-initrd $LOCATION/$DISK \
