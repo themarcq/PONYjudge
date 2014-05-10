@@ -1,3 +1,0 @@
-#!/bin/bash
-mount /dev/sda /mnt
-/mnt/init.sh

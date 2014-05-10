@@ -1,6 +1,0 @@
-config BR2_PACKAGE_HAS_OPENMAX
-	bool
-
-config BR2_PACKAGE_PROVIDES_OPENMAX
-	depends on BR2_PACKAGE_HAS_OPENMAX
-	string

@@ -1,0 +1,3 @@
+#!/bin/bash
+mdkir /usr/share/ponyjudge
+cp -R judge /usr/share/ponyjudge

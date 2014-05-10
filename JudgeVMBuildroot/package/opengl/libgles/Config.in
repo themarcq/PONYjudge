@@ -1,6 +1,0 @@
-config BR2_PACKAGE_HAS_OPENGL_ES
-	bool
-
-config BR2_PACKAGE_PROVIDES_OPENGL_ES
-	depends on BR2_PACKAGE_HAS_OPENGL_ES
-	string

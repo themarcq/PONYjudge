@@ -1,2 +1,0 @@
-#!/bin/bash
-cp S99Judge output/target/etc/init.d/

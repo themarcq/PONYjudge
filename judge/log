@@ -1,0 +1,222 @@
+QEMU 1.7.91 monitor - type 'help' for more information
+(qemu) [    0.000000] Initializing cgroup subsys cpuset
+[    0.000000] Initializing cgroup subsys cpu
+[    0.000000] Initializing cgroup subsys cpuacct
+[    0.000000] Linux version 3.13.5 (root@lyoko) (gcc version 4.7.3 (Buildroot 2014.02) ) #13 SMP Fri May 9 18:16:16 CEST 2014
+[    0.000000] e820: BIOS-provided physical RAM map:
+[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable
+[    0.000000] BIOS-e820: [mem 0x000000000009fc00-0x000000000009ffff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000000f0000-0x00000000000fffff] reserved
+[    0.000000] BIOS-e820: [mem 0x0000000000100000-0x0000000007ffdfff] usable
+[    0.000000] BIOS-e820: [mem 0x0000000007ffe000-0x0000000007ffffff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000fffc0000-0x00000000ffffffff] reserved
+[    0.000000] Notice: NX (Execute Disable) protection missing in CPU!
+[    0.000000] SMBIOS 2.4 present.
+[    0.000000] e820: last_pfn = 0x7ffe max_arch_pfn = 0x100000
+[    0.000000] found SMP MP-table at [mem 0x000f0b70-0x000f0b7f] mapped at [c00f0b70]
+[    0.000000] Scanning 1 areas for low memory corruption
+[    0.000000] init_memory_mapping: [mem 0x00000000-0x000fffff]
+[    0.000000] init_memory_mapping: [mem 0x07800000-0x07bfffff]
+[    0.000000] init_memory_mapping: [mem 0x00100000-0x077fffff]
+[    0.000000] init_memory_mapping: [mem 0x07c00000-0x07ffdfff]
+[    0.000000] ACPI: RSDP 000f09e0 000014 (v00 BOCHS )
+[    0.000000] ACPI: RSDT 07fffbbe 000034 (v01 BOCHS  BXPCRSDT 00000001 BXPC 00000001)
+[    0.000000] ACPI: FACP 07fff1c5 000074 (v01 BOCHS  BXPCFACP 00000001 BXPC 00000001)
+[    0.000000] ACPI: DSDT 07ffe040 001185 (v01 BOCHS  BXPCDSDT 00000001 BXPC 00000001)
+[    0.000000] ACPI: FACS 07ffe000 000040
+[    0.000000] ACPI: SSDT 07fff239 0008D5 (v01 BOCHS  BXPCSSDT 00000001 BXPC 00000001)
+[    0.000000] ACPI: APIC 07fffb0e 000078 (v01 BOCHS  BXPCAPIC 00000001 BXPC 00000001)
+[    0.000000] ACPI: HPET 07fffb86 000038 (v01 BOCHS  BXPCHPET 00000001 BXPC 00000001)
+[    0.000000] 0MB HIGHMEM available.
+[    0.000000] 127MB LOWMEM available.
+[    0.000000]   mapped low ram: 0 - 07ffe000
+[    0.000000]   low ram: 0 - 07ffe000
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x00001000-0x00ffffff]
+[    0.000000]   Normal   [mem 0x01000000-0x07ffdfff]
+[    0.000000]   HighMem  empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x00001000-0x0009efff]
+[    0.000000]   node   0: [mem 0x00100000-0x07ffdfff]
+[    0.000000] Using APIC driver default
+[    0.000000] ACPI: PM-Timer IO Port: 0xb008
+[    0.000000] ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
+[    0.000000] ACPI: LAPIC_NMI (acpi_id[0xff] dfl dfl lint[0x1])
+[    0.000000] ACPI: IOAPIC (id[0x00] address[0xfec00000] gsi_base[0])
+[    0.000000] IOAPIC[0]: apic_id 0 already used, trying 1
+[    0.000000] IOAPIC[0]: apic_id 1, version 17, address 0xfec00000, GSI 0-23
+[    0.000000] ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 dfl dfl)
+[    0.000000] ACPI: INT_SRC_OVR (bus 0 bus_irq 5 global_irq 5 high level)
+[    0.000000] ACPI: INT_SRC_OVR (bus 0 bus_irq 9 global_irq 9 high level)
+[    0.000000] ACPI: INT_SRC_OVR (bus 0 bus_irq 10 global_irq 10 high level)
+[    0.000000] ACPI: INT_SRC_OVR (bus 0 bus_irq 11 global_irq 11 high level)
+[    0.000000] Using ACPI (MADT) for SMP configuration information
+[    0.000000] ACPI: HPET id: 0x8086a201 base: 0xfed00000
+[    0.000000] smpboot: Allowing 1 CPUs, 0 hotplug CPUs
+[    0.000000] e820: [mem 0x08000000-0xfffbffff] available for PCI devices
+[    0.000000] setup_percpu: NR_CPUS:8 nr_cpumask_bits:8 nr_cpu_ids:1 nr_node_ids:1
+[    0.000000] PERCPU: Embedded 13 pages/cpu @c7eee000 s29588 r0 d23660 u53248
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 32412
+[    0.000000] Kernel command line: console=ttyS0
+[    0.000000] PID hash table entries: 512 (order: -1, 2048 bytes)
+[    0.000000] Dentry cache hash table entries: 16384 (order: 4, 65536 bytes)
+[    0.000000] Inode-cache hash table entries: 8192 (order: 3, 32768 bytes)
+[    0.000000] Initializing CPU#0
+[    0.000000] Initializing HighMem for node 0 (00000000:00000000)
+[    0.000000] Memory: 120120K/130672K available (4782K kernel code, 321K rwdata, 1576K rodata, 1876K init, 652K bss, 10552K reserved, 0K highmem)
+[    0.000000] virtual kernel memory layout:
+[    0.000000]     fixmap  : 0xfff15000 - 0xfffff000   ( 936 kB)
+[    0.000000]     pkmap   : 0xff800000 - 0xffc00000   (4096 kB)
+[    0.000000]     vmalloc : 0xc87fe000 - 0xff7fe000   ( 880 MB)
+[    0.000000]     lowmem  : 0xc0000000 - 0xc7ffe000   ( 127 MB)
+[    0.000000]       .init : 0xc1688000 - 0xc185d000   (1876 kB)
+[    0.000000]       .data : 0xc14abe55 - 0xc1687680   (1902 kB)
+[    0.000000]       .text : 0xc1000000 - 0xc14abe55   (4783 kB)
+[    0.000000] Checking if this processor honours the WP bit even in supervisor mode...Ok.
+[    0.000000] SLUB: HWalign=32, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Hierarchical RCU implementation.
+[    0.000000] 	RCU restricting CPUs from NR_CPUS=8 to nr_cpu_ids=1.
+[    0.000000] NR_IRQS:2304 nr_irqs:256 16
+[    0.000000] Console: colour VGA+ 80x25
+[    0.000000] console [ttyS0] enabled
+[    0.000000] tsc: Fast TSC calibration failed
+[    0.000000] tsc: Unable to calibrate against PIT
+[    0.000000] tsc: using HPET reference calibration
+[    0.000000] tsc: Detected 2514.149 MHz processor
+[    0.008949] Calibrating delay loop (skipped), value calculated using timer frequency.. 5028.29 BogoMIPS (lpj=2514149)
+[    0.009000] pid_max: default: 32768 minimum: 301
+[    0.009000] Security Framework initialized
+[    0.010000] Mount-cache hash table entries: 512
+[    0.012000] Initializing cgroup subsys freezer
+[    0.013225] Last level iTLB entries: 4KB 0, 2MB 0, 4MB 0
+[    0.013225] Last level dTLB entries: 4KB 0, 2MB 0, 4MB 0
+[    0.013225] tlb_flushall_shift: 6
+[    0.025000] Freeing SMP alternatives memory: 20K (c185d000 - c1862000)
+[    0.025000] ACPI: Core revision 20131115
+[    0.036000] ACPI: All ACPI Tables successfully acquired
+[    0.039000] Enabling APIC mode:  Flat.  Using 1 I/O APICs
+[    0.041000] ..TIMER: vector=0x30 apic1=0 pin1=2 apic2=-1 pin2=-1
+[    0.043000] ..MP-BIOS bug: 8254 timer not connected to IO-APIC
+[    0.043000] ...trying to set up timer (IRQ0) through the 8259A ...
+[    0.043000] ..... (found apic 0 pin 2) ...
+[    0.044000] ....... failed.
+[    0.044000] ...trying to set up timer as Virtual Wire IRQ...
+[    8.257000] random: nonblocking pool is initialized
+[  105.601000] BUG: unable to handle kernel NULL pointer dereference at 00000080
+[  105.601000] IP: [<c104bdcf>] __queue_work+0x1f/0x2a0
+[  105.601000] *pde = 00000000 
+[  105.601000] Oops: 0000 [#1] SMP 
+[  105.601000] Modules linked in:
+[  105.601000] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 3.13.5 #13
+[  105.601000] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Bochs 01/01/2011
+[  105.601000] task: c7850000 ti: c7808000 task.ti: c784e000
+[  105.601000] EIP: 0060:[<c104bdcf>] EFLAGS: 00000046 CPU: 0
+[  105.601000] EIP is at __queue_work+0x1f/0x2a0
+[  105.601000] EAX: 00000082 EBX: 00000087 ECX: c1667fb0 EDX: 00000000
+[  105.601000] ESI: 00000000 EDI: c1667f60 EBP: c7809f20 ESP: c7809ef4
+[  105.601000]  DS: 007b ES: 007b FS: 00d8 GS: 0000 SS: 0068
+[  105.601000] CR0: 8005003b CR2: 00000080 CR3: 01865000 CR4: 00000690
+[  105.601000] DR0: 00000000 DR1: 00000000 DR2: 00000000 DR3: 00000000
+[  105.601000] DR6: 00000000 DR7: 00000000
+[  105.601000] Stack:
+[  105.601000]  00000001 00000001 c1667ffc c1667ff8 00000086 00000008 00000008 c1667fb0
+[  105.601000]  00000087 00000381 c1667f60 c7809f2c c104c083 00006003 c7809f68 c12b22c0
+[  105.601000]  00000000 00000001 00000019 00007ffe 00000001 00000008 00000570 c15d6d03
+[  105.601000] Call Trace:
+[  105.601000]  [<c104c083>] queue_work_on+0x13/0x30
+[  105.601000]  [<c12b22c0>] credit_entropy_bits+0x1a0/0x2a0
+[  105.601000]  [<c12b49d6>] ? add_interrupt_randomness+0x166/0x1d0
+[  105.601000]  [<c12b49d6>] add_interrupt_randomness+0x166/0x1d0
+[  105.601000]  [<c10801ef>] ? tick_periodic+0x2f/0x80
+[  105.601000]  [<c1070903>] ? handle_irq_event_percpu+0x93/0x1c0
+[  105.601000]  [<c1070903>] handle_irq_event_percpu+0x93/0x1c0
+[  105.601000]  [<c1070a5e>] handle_irq_event+0x2e/0x50
+[  105.601000]  [<c1072ab0>] ? handle_simple_irq+0x60/0x60
+[  105.601000]  [<c1072b0a>] handle_edge_irq+0x5a/0xe0
+[  105.601000]  <IRQ> 
+[  105.601000]  [<c100361d>] ? do_IRQ+0x3d/0xb0
+[  105.601000]  [<c1055621>] ? hrtimer_run_pending+0x31/0xf0
+[  105.601000]  [<c14ab0ec>] ? common_interrupt+0x2c/0x31
+[  105.601000]  [<c103affb>] ? __do_softirq+0x6b/0x210
+[  105.601000]  [<c103af90>] ? perf_trace_irq_handler_entry+0x120/0x120
+[  105.601000]  <IRQ> 
+[  105.601000]  [<c103b3d5>] ? irq_exit+0x85/0x90
+[  105.601000]  [<c1003626>] ? do_IRQ+0x46/0xb0
+[  105.601000]  [<c14ab0ec>] ? common_interrupt+0x2c/0x31
+[  105.601000]  [<c1695cb3>] ? timer_irq_works+0x22/0x46
+[  105.601000]  [<c1696927>] ? setup_IO_APIC+0x43e/0x6e6
+[  105.601000]  [<c169345f>] ? native_smp_prepare_cpus+0x302/0x377
+[  105.601000]  [<c1688a95>] ? kernel_init_freeable+0x81/0x1c2
+[  105.601000]  [<c1499a2b>] ? kernel_init+0xb/0x100
+[  105.601000]  [<c14aabf7>] ? ret_from_kernel_thread+0x1b/0x28
+[  105.601000]  [<c1499a20>] ? rest_init+0x60/0x60
+[  105.601000] Code: f0 fd ff ff 90 8d b4 26 00 00 00 00 55 89 e5 57 56 89 d6 53 83 ec 20 89 45 e8 89 4d f0 89 45 ec 9c 58 f6 c4 02 0f 85 dc 01 00 00 <8b> 86 80 00 00 00 a9 00 00 01 00 0f 85 86 01 00 00 83 7d ec 08
+[  105.601000] EIP: [<c104bdcf>] __queue_work+0x1f/0x2a0 SS:ESP 0068:c7809ef4
+[  105.601000] CR2: 0000000000000080
+[  105.601000] ---[ end trace 5f088611b8fd5494 ]---
+[  105.601000] Kernel panic - not syncing: Fatal exception in interrupt
+[  105.601000] general protection fault: fffa [#2] SMP 
+[  105.601000] Modules linked in:
+[  105.601000] CPU: 0 PID: 1 Comm: swapper/0 Tainted: G      D      3.13.5 #13
+[  105.601000] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Bochs 01/01/2011
+[  105.601000] task: c7850000 ti: c7808000 task.ti: c784e000
+[  105.601000] EIP: 0060:[<c149cb76>] EFLAGS: 00000246 CPU: 0
+[  105.601000] EIP is at panic+0x136/0x168
+[  105.601000] EAX: 00000000 EBX: 00000009 ECX: 000000b6 EDX: 00000046
+[  105.601000] ESI: 00000000 EDI: 00000000 EBP: c7809da4 ESP: c7809d8c
+[  105.601000]  DS: 007b ES: 007b FS: 00d8 GS: 0000 SS: 0068
+[  105.601000] CR0: 8005003b CR2: 00000080 CR3: 01865000 CR4: 00000690
+[  105.601000] DR0: 00000000 DR1: 00000000 DR2: 00000000 DR3: 00000000
+[  105.601000] DR6: 00000000 DR7: 00000000
+[  105.601000] Stack:
+[  105.601000]  c159a554 c1872620 00000000 00000009 00000046 c7809eb8 c7809dbc c14a513d
+[  105.601000]  c158fac2 c7809eb8 00000009 c7850000 c7809de4 c149c6b6 c1593044 00000080
+[  105.601000]  00000080 00000046 c1224162 00000000 c7850000 c7809eb8 c7809e1c c149c7db
+[  105.601000] Call Trace:
+[  105.601000]  [<c14a513d>] oops_end+0xbd/0xc0
+[  105.601000]  [<c149c6b6>] no_context+0x186/0x18e
+[  105.601000]  [<c1224162>] ? vsnprintf+0x2d2/0x400
+[  105.601000]  [<c149c7db>] __bad_area_nosemaphore+0x11d/0x125
+[  105.601000]  [<c14a7410>] ? __do_page_fault+0x4c0/0x4c0
+[  105.601000]  [<c149c7f5>] bad_area_nosemaphore+0x12/0x14
+[  105.601000]  [<c14a7003>] __do_page_fault+0xb3/0x4c0
+[  105.601000]  [<c12ab503>] ? serial8250_console_putchar+0x23/0x30
+[  105.601000]  [<c12ab4e0>] ? wait_for_xmitr+0x80/0x80
+[  105.601000]  [<c12ab4e0>] ? wait_for_xmitr+0x80/0x80
+[  105.601000]  [<c12abfa0>] ? serial8250_modem_status+0xc0/0xc0
+[  105.601000]  [<c14a7410>] ? __do_page_fault+0x4c0/0x4c0
+[  105.601000]  [<c14a7418>] do_page_fault+0x8/0x10
+[  105.601000]  [<c14a49da>] error_code+0x5a/0x60
+[  105.601000]  [<c14a7410>] ? __do_page_fault+0x4c0/0x4c0
+[  105.601000]  [<c104bdcf>] ? __queue_work+0x1f/0x2a0
+[  105.601000]  [<c104c083>] queue_work_on+0x13/0x30
+[  105.601000]  [<c12b22c0>] credit_entropy_bits+0x1a0/0x2a0
+[  105.601000]  [<c12b49d6>] ? add_interrupt_randomness+0x166/0x1d0
+[  105.601000]  [<c12b49d6>] add_interrupt_randomness+0x166/0x1d0
+[  105.601000]  [<c10801ef>] ? tick_periodic+0x2f/0x80
+[  105.601000]  [<c1070903>] ? handle_irq_event_percpu+0x93/0x1c0
+[  105.601000]  [<c1070903>] handle_irq_event_percpu+0x93/0x1c0
+[  105.601000]  [<c1070a5e>] handle_irq_event+0x2e/0x50
+[  105.601000]  [<c1072ab0>] ? handle_simple_irq+0x60/0x60
+[  105.601000]  [<c1072b0a>] handle_edge_irq+0x5a/0xe0
+[  105.601000]  <IRQ> 
+[  105.601000]  [<c100361d>] ? do_IRQ+0x3d/0xb0
+[  105.601000]  [<c1055621>] ? hrtimer_run_pending+0x31/0xf0
+[  105.601000]  [<c14ab0ec>] ? common_interrupt+0x2c/0x31
+[  105.601000]  [<c103affb>] ? __do_softirq+0x6b/0x210
+[  105.601000]  [<c103af90>] ? perf_trace_irq_handler_entry+0x120/0x120
+[  105.601000]  <IRQ> 
+[  105.601000]  [<c103b3d5>] ? irq_exit+0x85/0x90
+[  105.601000]  [<c1003626>] ? do_IRQ+0x46/0xb0
+[  105.601000]  [<c14ab0ec>] ? common_interrupt+0x2c/0x31
+[  105.601000]  [<c1695cb3>] ? timer_irq_works+0x22/0x46
+[  105.601000]  [<c1696927>] ? setup_IO_APIC+0x43e/0x6e6
+[  105.601000]  [<c169345f>] ? native_smp_prepare_cpus+0x302/0x377
+[  105.601000]  [<c1688a95>] ? kernel_init_freeable+0x81/0x1c2
+[  105.601000]  [<c1499a2b>] ? kernel_init+0xb/0x100
+[  105.601000]  [<c14aabf7>] ? ret_from_kernel_thread+0x1b/0x28
+[  105.601000]  [<c1499a20>] ? rest_init+0x60/0x60
+[  105.601000] Code: 00 e8 bf 7f d8 ff 4e 75 f3 83 c3 64 69 05 0c 26 87 c1 e8 03 00 00 39 d8 7f c2 83 3d 0c 26 87 c1 00 74 05 e8 2d a2 bb ff fb 31 f6 <39> fe 7c 15 83 75 f0 01 8b 45 f0 ff 15 00 26 87 c1 01 c6 8d be
+[  105.601000] EIP: [<c149cb76>] panic+0x136/0x168 SS:ESP 0068:c7809d8c
+[  105.601000] ---[ end trace 5f088611b8fd5495 ]---

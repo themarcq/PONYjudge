@@ -1,5 +1,6 @@
 #@/bin/bash
 source ./judge.conf
+modprobe nbd max_part=63
 pids[0]=0
 
 function slots_busy {

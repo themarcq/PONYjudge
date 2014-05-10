@@ -1,0 +1,13 @@
+#!/bin/bash
+LOCATION="./JudgeVM"
+KERNEL="bzImage"
+				
+qemu-system-i386 -kernel $LOCATION/$KERNEL \
+-serial stdio \
+-nographic \
+-append "console=ttyS0" \
+-hda cells/1/image.img \
+-boot c \
+-m 128 \
+-localtime \
+-no-reboot \
