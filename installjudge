@@ -1,3 +1,4 @@
 #!/bin/bash
+apt-get install p7zip-full qemu
 mdkir /usr/share/ponyjudge
 cp -R judge /usr/share/ponyjudge

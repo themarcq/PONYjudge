@@ -50,7 +50,7 @@ qemu-system-i386 -kernel $LOCATION/$KERNEL \
 -no-reboot \
 
 #take its results and send to storage
-qemu-nbd -c /dev/nbd$nbd $DIRCELLS/$id/image.img 5G
+qemu-nbd -c /dev/nbd$nbd $DIRCELLS/$id/image.img
 mkdir $DIRCELLS/$id/mount
 mount /dev/nbd$nbd $DIRCELLS/$id/mount
 cat $DIRCELLS/$id/mount/raport
@@ -59,7 +59,14 @@ cat $DIRCELLS/$id/mount/raport
 umount $DIRCELLS/$id/mount
 qemu-nbd -d /dev/nbd$nbd
 rm -R $DIRCELLS/$id
-$REQUEST "DATABASE UPDATE solutions SET status='judged', judging=FALSE, judged=TRUE, WHERE id='$id'"
+#$REQUEST "DATABASE UPDATE solutions SET status='judged', judging=FALSE, judged=TRUE, WHERE id='$id'"
+
+
+
+
+
+
+
 
 #compile and if there was something wrong - send it to storage
 #compile=`$RUN $DIRCOMP/compile_$language $id 1024 128 10.000`  
