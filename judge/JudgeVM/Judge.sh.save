@@ -1,0 +1,10 @@
+#!/bin/sh
+#/bin/sh
+#ulimit
+#timelimit sudo program < in > tmpout
+#if timelimit timelimited program - raport
+#diff tmpout out
+#raport diff
+for filein in /mnt/ins/*
+do
+	

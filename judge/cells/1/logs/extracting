@@ -1,0 +1,24 @@
+
+7-Zip [64] 9.20  Copyright (c) 1999-2010 Igor Pavlov  2010-11-18
+p7zip Version 9.20 (locale=en_US.UTF-8,Utf16=on,HugeFiles=on,4 CPUs)
+
+Processing archive: /home/www/PONYjudge/judge/tests/ins/1.7z
+
+Extracting  0.in
+
+Everything is Ok
+
+Size:       0
+Compressed: 76
+
+7-Zip [64] 9.20  Copyright (c) 1999-2010 Igor Pavlov  2010-11-18
+p7zip Version 9.20 (locale=en_US.UTF-8,Utf16=on,HugeFiles=on,4 CPUs)
+
+Processing archive: /home/www/PONYjudge/judge/tests/outs/1.7z
+
+Extracting  0.out
+
+Everything is Ok
+
+Size:       14
+Compressed: 125
