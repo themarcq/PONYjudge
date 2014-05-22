@@ -31,7 +31,7 @@ do
     OUT="$DIR/outs/$FILE.out"
     echo "Judging $IN"
     $DIR/timelimit -t $TIMELIMIT -T $TIMELIMIT \
-      $DIR/time -o $DIR/timelog -f "%e:%x" \
+      $DIR/time -o $DIR/timelog -f "%e" \
         echo "ulimit -p 2;$DIR/program < $IN > $DIR/tmpout;exit $?" | su $USER
     EXIT=$?
     if [ "x$EXIT" == "x143" ]

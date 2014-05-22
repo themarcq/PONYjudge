@@ -11,6 +11,7 @@ fi
 id=1
 problem=1
 language=c
+timelimit=1
 memlimit=128
 nbd=0
 LOGDIR="$DIRCELLS/$id/logs"
