@@ -18,6 +18,7 @@ timelimit=$5
 nbd=$6
 LOGDIR="$DIRCELLS/$id/logs"
 mkdir $LOGDIR -p
+
 #compile
 echo Compiling source
 timelimit -t 60 -T 60 \
@@ -100,11 +101,13 @@ qemu-nbd -c /dev/nbd$nbd $DIRCELLS/$id/image.img
 mkdir $DIRCELLS/$id/mount
 mount /dev/nbd$nbd $DIRCELLS/$id/mount
 cat $DIRCELLS/$id/mount/raport
+raport=cat $DIRCELLS/$id/mount/raport
 
 #clean
 echo Cleaning
 umount $DIRCELLS/$id/mount
 qemu-nbd -d /dev/nbd$nbd
+rm $DIRCELLS/$id/image.img
 #rm -R $DIRCELLS/$id
-#$REQUEST "DATABASE UPDATE solutions SET status='judged', judging=FALSE, judged=TRUE, WHERE id='$id'"
+$REQUEST "DATABASE UPDATE solutions SET judging=FALSE, judged=TRUE,raport='$raport' WHERE id='$id'"
 exit 0

@@ -15,6 +15,7 @@ function slots_busy {
 }
 
 function remove_pid {
+    echo "releasing pid ${pids[$i]}"
     end=`expr ${pids[0]} - 1`
     for i in `seq $1 ${pids[0]}`
     do
@@ -25,6 +26,7 @@ function remove_pid {
 function add_pid {
     pids[0]=`expr ${pids[0]} + 1`
     pids[${pids[0]}]=$1
+    echo "adding pid $1"
 }
 
 while :
@@ -46,31 +48,25 @@ do
             #if there are no ins or they are outdated
             if [ ! -a $DIRINS/$problem.7z ] || [ $inshash != `cat $DIRINS/$problem.hash` ]
             then
-                $REQUEST "FILE TESTSIN $id.7z" > $DIRINS/$problem.7z
+                $REQUEST "FILE TAKE $id.in.7z" > $DIRINS/$problem.7z
                 $REQUEST "DATABASE SELECT inshash FROM problems WHERE id=$problem" > $DIRINS/$problem.hash
-                rm -R $DIRINS/$problem
-                mkdir $DIRINS/$problem
-                7z e $DIRINS/$problem.7z -o$DIRINS/$problem/
             fi
             #if there are no outs or they are outdated
             if [ ! -a $DIROUTS/$problem.7z ] || [ $outshash != `cat $DIROUTS/$problem.hash` ]
             then
-                $REQUEST "FILE TESTSOUT $id.7z" > $DIROUTS/$problem.7z
+                $REQUEST "FILE TAKE $id.out.7z" > $DIROUTS/$problem.7z
                 $REQUEST "DATABASE SELECT outshash FROM problems WHERE id=$problem" > $DIROUTS/$problem.hash
-                 rm -R $DIROUTS/$problem
-                 mkdir $DIROUTS/$problem
-                 7z e $DIROUTS/$problem.7z -o$DIROUTS/$problem/
             fi
             #download source and give all the info for some judge-slave
             type=`$REQUEST "DATABASE SELECT type FROM solutions WHERE id=$id"`
             memlimit=`$REQUEST "DATABASE SELECT memlimit FROM problems WHERE id=$problem"`
             timelimit=`$REQUEST "DATABASE SELECT timelimit FROM problems WHERE id=$problem"`
-            $REQUEST "FILE source $id.$type" > "$DIRCELLS/$id/source.$type"
+            $REQUEST "FILE TAKE $id.$type" > "$DIRCELLS/$id/source.$type"
             #give infos to judge-slave
             $SLAVE $id $problem $type $memlimit $timelimit `expr ${pids[0]} + 1` &
             #save its pid
             add_pid $!
         fi
     fi
-    sleep 0.25
+    sleep 1
 done

@@ -104,4 +104,5 @@ cat $DIRCELLS/$id/mount/raport
 echo Cleaning
 umount $DIRCELLS/$id/mount
 qemu-nbd -d /dev/nbd$nbd
+rm $DIRCELLS/$id/image.img
 exit 0

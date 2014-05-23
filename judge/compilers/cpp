@@ -1,0 +1,2 @@
+#/bin/bash
+g++ -m32 -static $1 -o $2 2>&1 > $3

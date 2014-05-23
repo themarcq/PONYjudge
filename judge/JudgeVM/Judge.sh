@@ -20,7 +20,7 @@ chmod 444 $DIR/ins/*
 chmod 555 $DIR/ins
 chmod 777 $DIR/tmpout
 RAPORT="$DIR/raport"
-echo "RAPORT" > $RAPORT
+touch $RAPORT
 chmod 0 $RAPORT
 echo "----------"
 

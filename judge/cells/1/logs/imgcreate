@@ -16,6 +16,6 @@ Superblock backups stored on blocks:
 	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
 
 Allocating group tables:  0/80     done                            
-Writing inode tables:  0/8049/8065/80     done                            
+Writing inode tables:  0/80     done                            
 Writing superblocks and filesystem accounting information:  0/80     done
 
