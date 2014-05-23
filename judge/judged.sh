@@ -1,6 +1,10 @@
 #@/bin/bash
 source ./judge.conf
+echo Loading modules
 modprobe nbd max_part=63
+echo Establishing connectin to storage
+autossh -M 0 -f -- ponyjudge_storage@192.168.56.101 -MNf -i $DIRCERTS/id_rsa
+
 pids[0]=0
 
 function slots_busy {
@@ -12,6 +16,7 @@ function slots_busy {
             pids[0]=`expr ${pids[0]} - 1`
         fi
     done
+    echo ${pids[0]}
 }
 
 function remove_pid {
@@ -37,8 +42,12 @@ do
     then
         #check if there is something new
         id=`$REQUEST 'DATABASE SELECT id FROM solutions WHERE judged=FALSE AND judging=FALSE LIMIT 1' `
-        if [ -n $id ]
+	if [ "x$id" != "x" ]
         then
+	    re='^[0-9]+$'
+            if ! [[ $id =~ $re ]] ; then
+                echo "error: Wrong id, maybe wrong storage request"; exit 1
+            fi
             #reserve it
             $REQUEST "DATABASE UPDATE VALUES judging=TRUE FROM solutions WHERE id=$id"
             #check what problem it is and download md5hash of tests

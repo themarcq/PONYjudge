@@ -1,4 +1,4 @@
 #!/bin/bash
 source ./judge.conf
-RESPONSE=`echo "$1" | ssh storage@$STORAGEIP -q -i $DIRCERTS/id_rsa`
-echo $RESPONSE;
+echo $1 | ssh ponyjudge_storage@$STORAGEIP -q -i $DIRCERTS/id_rsa
+#echo $RESPONSE;

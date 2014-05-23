@@ -1,4 +1,4 @@
 #!/bin/bash
-apt-get install p7zip-full qemu
+apt-get install p7zip-full qemu autossh
 mdkir /usr/share/ponyjudge
 cp -R judge /usr/share/ponyjudge

@@ -1,0 +1,16 @@
+solutions
+	id
+	problem
+	type
+	judged
+	judging
+	raport
+	author
+problems
+	id
+	ranking
+users
+	id
+	nick
+	password
+
